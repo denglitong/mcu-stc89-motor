@@ -15,6 +15,8 @@ void turn_on_28BYJ() {
     i++;
     // 对 8 取模（只取前 3 位）
     i &= 0x07;
+    // 这里延迟的时间间隔需要大于电机的驱动频率对应的单次耗时
+    // 550HZ ->1~2ms -> 选用 2ms
     delay_ms(2);
   }
 }
@@ -42,8 +44,8 @@ void turn_on_28BYJ_with_specific_angle(unsigned long angle) {
 
 int main() {
   // turn_on_28BYJ();
-  turn_on_28BYJ_with_specific_angle(180);
+  turn_on_28BYJ_with_specific_angle(90);
   // 需要加这个主循环，不然主板总是不断循环运行 main 函数（可以理解为裸系统）
-  while (1)
-    ;
+  while (1) {
+  }
 }
