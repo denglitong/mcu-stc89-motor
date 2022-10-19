@@ -40,6 +40,9 @@ void delay_ms_imprecise(unsigned int s) {
  * @param s
  */
 void delay_ms_precise(unsigned int s) {
+  EA = 1;   // enable global interrupt
+  ET0 = 1;  // enable Timer0 interrupt
+
   // setup T0_M1 = 0, T0_M0 = 1 (Timer0 mode TH0-TL0 16 bits timer)
   TMOD = 0x01;
 
@@ -47,7 +50,7 @@ void delay_ms_precise(unsigned int s) {
   TH0 = 0xFC;
   TL0 = 0x67;
 
-  // start/enable Timer0
+  // start Timer0
   TR0 = 1;
 
   // delay s milliseconds
@@ -75,6 +78,9 @@ void delay_ms_precise(unsigned int s) {
  * @param fun the fun to call within these total_millis milliseconds
  */
 void run_in_every_ms(unsigned int total_millis, VoidFun *fun) {
+  EA = 1;   // enable global interrupt
+  ET0 = 1;  // enable Timer0 interrupt
+
   // setup T0_M1 = 0, T0_M0 = 1 (Timer0 mode TH0-TL0 16 bits timer)
   TMOD = 0x01;
 
@@ -82,7 +88,7 @@ void run_in_every_ms(unsigned int total_millis, VoidFun *fun) {
   TH0 = 0xFC;
   TL0 = 0x67;
 
-  // start/enable Timer0
+  // start Timer0
   TR0 = 1;
 
   // delay total_millis milliseconds
